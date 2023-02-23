@@ -12,6 +12,10 @@ export async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, ta
     const AFTR_CONTRACT_SOURCE_ID = (env === "PROD") ? "00elNGZCnqSfVIBUUOBeFB8VGg0nX8vCiDyZed0Zdys" : "46NSN651ClSYi241BtcarUY15wBL7OJgJsDEALE9Dzo";
     const walletAddress = await arweave.wallets.jwkToAddress(wallet);
 
+    if (!walletAddress || typeof walletAddress !== "string" || !isArweaveAddress(walletAddress)) {
+        return { status: "error", message: "Invalid owner supplied." };
+    }
+
     const vResult = validateRepo(repo);
     if (!vResult.validation) {
         return { status: "error", message: vResult.error };
@@ -67,9 +71,6 @@ function validateRepo(repo: RepoInterface) {
     }
     if (!repo.ticker || typeof repo.ticker !== "string" || repo.ticker === "") {
         return { validation: false, error: "Invalid ticker supplied." };
-    }
-    if (!repo.owner || typeof repo.owner !== "string" || !isArweaveAddress(repo.owner)) {
-        return { validation: false, error: "Invalid owner supplied." };
     }
 
     /*** Defaulting values to make it easier on partners for now
