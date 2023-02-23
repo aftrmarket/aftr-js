@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+dist/lib
+dist-ssr
+*.local
+.vercel
+.code-workspace
+aftr.code-workspace

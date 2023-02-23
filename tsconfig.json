@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es2020",
+        "lib": ["es2020"],
+        "outDir": "dist/lib",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "moduleResolution": "node"
+    },
+    "exclude": ["node_modules", "dist"]
+}
