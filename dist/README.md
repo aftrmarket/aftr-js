@@ -15,7 +15,7 @@ All calls to AFTR JS asynchronously return an SDKReturn object (Don't forget awa
 ### Create Repo
 To create an AFTR Repo, you'll need to define the following parameters:
 1. repo (object)
-The repo is an object requires 2 parameters, name and ticker.
+The repo is an object requiring 2 parameters, name and ticker.
 ```typescript
 {
     name: "NAME",
@@ -57,7 +57,7 @@ const tags = [
 
 const env = "TEST";  // "PROD" for Mainnet
 
-let response = await createRepo(repo, "use_wallet", tags, "TEST");
+let response = await createRepo(repo, "use_wallet", tags, env);
 if (response.status === "success") {
     console.log("NEW REPO ID: " + response.data);
 } else {
