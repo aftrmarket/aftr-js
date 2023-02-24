@@ -54,7 +54,7 @@ export async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, ta
 
         if (result.status === "success") {
             //@ts-expect-error
-            return { status: "success", data: result.data.txIds.contractTxId };
+            return { status: "success", data: result.data.contractTxId };
         } else {
             return { status: "error", message: result.message };
         }
