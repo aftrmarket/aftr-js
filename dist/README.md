@@ -42,6 +42,8 @@ The env parameter allows you to create repos on the Arweave Mainnet (default) or
 ```
 
 ```typescript
+import { createRepo } from "aftr-js";
+
 // Method Definition
 async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, tags?: any, env: "PROD" | "TEST" = "PROD") : Promise<SDKResult>
 
@@ -84,6 +86,8 @@ The wallet is Arweave wallet that is depositing tokens into the repo. If you use
 ```
 
 ```typescript
+import { deposit } from "aftr-js";
+
 // Method Definition
 async function deposit(repoId: string, depTokenId: string, qty: number, wallet: ExtensionOrJWK, env: "PROD" | "TEST" = "PROD") : Promise<SDKResult>
 
