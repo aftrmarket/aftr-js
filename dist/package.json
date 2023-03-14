@@ -1,6 +1,6 @@
 {
     "name": "aftr-js",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "description": "Library for interacting with the AFTR Protocol on Arweave.",
     "module": "lib/index.js",
     "repository": {

@@ -6,6 +6,23 @@ AFTR JS is an SDK that gives dApps the ability to work with AFTR Repos.  The cur
 npm i aftr-js
 ```
 
+## Requirements
+**Disclaimer:**  The AFTR protocol, libraries, and websites are beta versions. They are all provided "as is." While Arceum Inc. will do its best to resolve any issue encountered in these platforms, Arceum Inc. will not be liable for any loss as a result from usage of any of these platforms.
+
+### Supported Assets ###
+AFTR is a multi-sig for Arweave assets.  As such, an asset must support internal writes to be deposited into an AFTR Repo.  This means that an asset must include the following parameters and functions to be deposited into an AFTR Repo:
+**Parameters**
+1. claimable[]
+2. claims[]
+
+**Functions**
+1. allow
+2. claim
+
+To read more about cross contract communication, please see the following:
+- Warp's documentation on [Internal Writes](https://academy.warp.cc/docs/sdk/advanced/internal-calls)
+- Warp's [tutorial on DEXs](https://academy.warp.cc/tutorials/dex/introduction/intro)
+
 ## Usage
 All calls to AFTR JS asynchronously return an SDKReturn object (Don't forget await!):
 ```typescript
@@ -22,6 +39,41 @@ The repo is an object requiring 2 parameters, name and ticker.
     ticker: "TICKER"
 }
 ```
+A repo will be created with the following default state:
+```typescript
+{
+    name: "<NAME set in the required parameters>",
+    ticker: "<TICKER set in the required parameters>",
+    balances: { "<OWNER WALLET ADDR>" : 1 },
+    tokens: [],
+    vault: {},
+    votes: [],
+    status: "started",
+    owner: "<OWNER WALLET ADDR>",
+    ownership: "single",
+    votingSystem: "weighted",
+    claims: [],
+    claimable: [],
+    evolve: "",
+    settings: [
+        ["quorum", 0.5],
+        ["support", 0.51],
+        ["voteLength", 2160],
+        ["communityLogo", ""]
+    ]
+}
+```
+You can set any of the parameters above to meet your needs.
+
+Please note that if you have a use case where you need to call the repo's transfer function, you'll need to add the transferable setting to the settings array like this:
+```typescript
+{
+    settings: [
+        ["transferable", true]
+    ]
+}
+```
+
 2. wallet (JWK)
 The wallet is Arweave wallet that will be the owner of the newly created repo. If you use a wallet like ArConnect, you can simply pass in "use_wallet".
 3. tags (optional)
@@ -47,10 +99,13 @@ import { createRepo } from "aftr-js";
 // Method Definition
 async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, tags?: any, env: "PROD" | "TEST" = "PROD") : Promise<SDKResult>
 
-// Example Call
+// Example Call with a quorum setting that's different from the default
 const repo = {
     name: "My Repo",
-    ticker: "MR"
+    ticker: "MR",
+    settings: [
+        ["quorum", 0.3]
+    ]
 };
 
 const tags = [
@@ -81,7 +136,7 @@ The wallet is Arweave wallet that is depositing tokens into the repo. If you use
 5. env (optional, defaults to mainnet) - "PROD" | "TEST"
 
 **Response**
-```
+```typescript
 { status: "success", data: { repoTxId: <TX-ID-REPO-INTERACTION>, depTokenTxId: <TX-ID-TOKEN-INTERACTION>} } | { status: "error", message: string }
 ```
 
