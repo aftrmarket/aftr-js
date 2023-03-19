@@ -11,6 +11,7 @@ npm i aftr-js
 
 ### Supported Assets ###
 AFTR is a multi-sig for Arweave assets.  As such, an asset must support internal writes to be deposited into an AFTR Repo.  This means that an asset must include the following parameters and functions to be deposited into an AFTR Repo:
+
 **Parameters**
 1. claimable[]
 2. claims[]
