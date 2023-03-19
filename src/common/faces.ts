@@ -36,6 +36,7 @@ export interface RepoInterface {
     claimable: ClaimableInterface[],
     claims: string[],
     evolve?: string,
+    functions?: Array<'transfer' | 'deposit' | 'allow' | 'claim' | 'multiInteraction'> | [],
     settings?: Map<string, any>
 }
 

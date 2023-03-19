@@ -55,6 +55,7 @@ A repo will be created with the following default state:
     claims: [],
     claimable: [],
     evolve: "",
+    functions: ["transfer", "deposit", "allow", "claim", "multiInteraction"],
     settings: [
         ["quorum", 0.5],
         ["support", 0.51],
@@ -65,14 +66,19 @@ A repo will be created with the following default state:
 ```
 You can set any of the parameters above to meet your needs.
 
-Please note that if you have a use case where you need to call the repo's transfer function, you'll need to add the transferable setting to the settings array like this:
+There are several optional functions that may be turned off in a repo contract.  By default, these will be turned on, so if you have a use case where you want to restrict these capabilities, you can define **functions** parameter in your initial state.  For example, if you setup a repo to act as a multi-sig where you and several others have rights to sign transactions, you may not want signers of this repo to be able to transfer their membership.  In this case, you would add the **functions** array to your repo state leaving out the "transfer" value.  Just remember, if you add the **functions** array to your state, you'll need to supply all the optional functions that you want to include in the repo contract.  You can also edit these settings later on [AFTR.Market](https://aftr.market).
+
+
+Valid values for the **functions** array include the following:
 ```typescript
-{
-    settings: [
-        ["transferable", true]
-    ]
-}
+["transfer", "deposit", "allow", "claim", "multiInteraction"] | []
 ```
+
+- **Transfer** - Gives the repo the ability to transfer membership balances.</li>
+- **Deposit** - Allows anyone to deposit supported Arweave assets into the repo.</li>
+- **Allow** - Required for tradability protocols such as Verto Flex.</li>
+- **Claim** - Required for tradability protocols such as Verto Flex.</li>
+- **Multi-Interactions** - Gives the repo the ability to perform more than one change at a time.</li>
 
 2. wallet (JWK)
 The wallet is Arweave wallet that will be the owner of the newly created repo. If you use a wallet like ArConnect, you can simply pass in "use_wallet".

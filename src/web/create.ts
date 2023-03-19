@@ -25,6 +25,8 @@ export async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, ta
         return { status: "error", message: "Tags are invalid" };
     }
 
+    const functions = repo.functions ? repo.functions : ["transfer", "deposit", "allow", "claim", "multiInteraction"];
+
     let repoTemplate = {
         "name": repo.name,
         "ticker": repo.ticker,
@@ -38,6 +40,7 @@ export async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, ta
         "votingSystem": "weighted",
         "claims": [],
         "claimable": [],
+        "functions": functions,
         "evolve": "",
         "settings": [
             ["quorum", 0.5],
@@ -71,6 +74,18 @@ function validateRepo(repo: RepoInterface) {
     }
     if (!repo.ticker || typeof repo.ticker !== "string" || repo.ticker === "") {
         return { validation: false, error: "Invalid ticker supplied." };
+    }
+
+    if (typeof repo.functions !== "undefined") {
+        if (!Array.isArray(repo.functions)) {
+            return { validation: false, error: "The functions property must be an array." }
+        }
+
+        const validFunctions = ["transfer", "deposit", "allow", "claim", "multiInteraction"];
+        if ( repo.functions.length !== 0 && !(repo.functions.every(item => validFunctions.includes(item))) ) {
+            return { validation: false, error: "Values for the functions parameter can only be 'transfer', 'deposit', 'allow', 'claim', and/or 'multiInteraction'." }
+        }
+
     }
 
     /*** Defaulting values to make it easier on partners for now
