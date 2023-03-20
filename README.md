@@ -75,11 +75,11 @@ Valid values for the **functions** array include the following:
 ["transfer", "deposit", "allow", "claim", "multiInteraction"] | []
 ```
 
-- **Transfer** - Gives the repo the ability to transfer membership balances.</li>
-- **Deposit** - Allows anyone to deposit supported Arweave assets into the repo.</li>
-- **Allow** - Required for tradability protocols such as Verto Flex.</li>
-- **Claim** - Required for tradability protocols such as Verto Flex.</li>
-- **Multi-Interactions** - Gives the repo the ability to perform more than one change at a time.</li>
+- **Transfer** - Gives the repo the ability to transfer membership balances.
+- **Deposit** - Allows anyone to deposit supported Arweave assets into the repo.
+- **Allow** - Required for tradability protocols such as Verto Flex.
+- **Claim** - Required for tradability protocols such as Verto Flex.
+- **Multi-Interactions** - Gives the repo the ability to perform more than one change at a time.
 
 2. wallet (JWK)
 The wallet is Arweave wallet that will be the owner of the newly created repo. If you use a wallet like ArConnect, you can simply pass in "use_wallet".
