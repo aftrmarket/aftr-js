@@ -76,9 +76,9 @@ Valid values for the **functions** array include the following:
 ```
 
 - **Transfer** - Gives the repo the ability to transfer membership balances.
-- **Deposit** - Allows anyone to deposit supported Arweave assets into the repo.
-- **Allow** - Required for tradability protocols such as Verto Flex.
-- **Claim** - Required for tradability protocols such as Verto Flex.
+- **Deposit** - Allows anyone to deposit supported Arweave assets into this repo.
+- **Allow** - Required for tradability protocols such as Verto Flex and for depositing this repo into another AFTR Repo.
+- **Claim** - Required for tradability protocols such as Verto Flex and for depositing this repo into another AFTR Repo.
 - **Multi-Interactions** - Gives the repo the ability to perform more than one change at a time.
 
 2. wallet (JWK)
