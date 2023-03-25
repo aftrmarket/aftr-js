@@ -21,6 +21,7 @@ AFTR is a multi-sig for Arweave assets.  As such, an asset must support internal
 2. claim
 
 To read more about cross contract communication, please see the following:
+- [SmartWeave Contract Interoperability](https://github.com/aftrmarket/aftr-js/blob/main/interoperability/SmartWeaveInterop.md)
 - Warp's documentation on [Internal Writes](https://academy.warp.cc/docs/sdk/advanced/internal-calls)
 - Warp's [tutorial on DEXs](https://academy.warp.cc/tutorials/dex/introduction/intro)
 
