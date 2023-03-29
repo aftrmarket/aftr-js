@@ -1,6 +1,7 @@
 {
     "name": "aftr-js",
     "version": "0.1.14",
+    "types": "types/index.d.ts",
     "description": "",
     "main": "index.ts",
     "scripts": {
