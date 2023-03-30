@@ -1,18 +1,39 @@
 {
     "name": "aftr-js",
-    "version": "0.1.14",
-    "description": "",
-    "main": "index.ts",
+    "version": "0.1.18",
+    "description": "Library for interacting with the AFTR Protocol on Arweave.",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
     "scripts": {
-        "build": "rm -rf dist/lib && tsc",
+        "build": "rm -rf dist && tsup src/index.ts --format cjs, esm --dts",
+        "lint": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "repository": "",
-    "keywords": [],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aftrmarket/aftr-js.git"
+    },
+    "keywords": [
+        "aftr",
+        "aftr-market",
+        "arweave",
+        "aftr-repo",
+        "aftrjs",
+        "aftr-js"
+    ],
     "author": "Arceum",
     "license": "MIT",
+    "files": [
+        "dist"
+    ],
+    "bugs": {
+        "url": "https://github.com/aftrmarket/aftr-js/issues"
+    },
+    "homepage": "https://github.com/aftrmarket/aftr-js#readme",
     "devDependencies": {
         "@types/node": "^16.18.12",
+        "tsup": "^6.7.0",
         "typescript": "^4.9.5"
     },
     "dependencies": {

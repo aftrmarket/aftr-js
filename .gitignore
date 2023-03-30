@@ -1,7 +1,6 @@
 node_modules
 .DS_Store
-dist/lib
-dist-ssr
+dist
 *.local
 .vercel
 .code-workspace

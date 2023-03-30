@@ -5,8 +5,11 @@
         "outDir": "dist/lib",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
+        "declaration": true,
         "skipLibCheck": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "noEmit": true,
+        "noUncheckedIndexedAccess": true
     },
     "exclude": ["node_modules", "dist"]
 }
