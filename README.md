@@ -92,6 +92,8 @@ Tags allow you add additional tags to the newly created repo. This can be a good
     { name: "TAG_NAME2", value: "TAG_VALUE2" }
 ]
 ```
+Please note that if you'd like to have your asset implement [ANS-110](https://github.com/ArweaveTeam/arweave-standards/blob/master/ans/ANS-110.md), you'll need to add those tags.  AFTR-JS does not implement ANS-110 by default.
+
 4. env (optional, defaults to mainnet) - "PROD" | "TEST"
 The env parameter allows you to create repos on the Arweave Mainnet (default) or the Arweave Testnet. Mainnet repos can be found on [aftr.market](https://aftr.market) and Testnet repos can be found on [test.aftr.market](https://test.aftr.market).  
 
