@@ -76,8 +76,6 @@ function addTags(currentTags, aftr = false) {
     }
     if (aftr) {
         tags.push({ name: "Protocol", value: "AFTR" });
-        tags.push({ name: "Implements", value: ["ANS-110"] });
-        tags.push({ name: "Type", value: ["aftr-repo"] });
     }
 
     return tags;
