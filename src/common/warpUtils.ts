@@ -9,9 +9,9 @@ function warpInit(env: "PROD" | "TEST") {
     try {
         // Using Warp
         if (env === "PROD") {
-            warp = WarpFactory.forMainnet();
+            warp = WarpFactory.forMainnet().use(new DeployPlugin());
         } else {
-            warp = WarpFactory.forTestnet();
+            warp = WarpFactory.forTestnet().use(new DeployPlugin());
         }
     } catch (e) {
         console.log(e);
