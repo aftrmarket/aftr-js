@@ -1,6 +1,7 @@
 import { ExtensionOrJWK, SDKResult, InputInterface } from './faces';
 //@ts-ignore
 import { WarpFactory } from "warp-contracts/web";
+import { DeployPlugin, InjectedArweaveSigner } from 'warp-contracts-plugin-deploy';
 
 function warpInit(env: "PROD" | "TEST") {
     let warp = {};
@@ -52,13 +53,21 @@ async function warpWrite(contractId: string, input: InputInterface, internalWrit
 };
 
 async function warpCreateFromTx(initState: string, srcId: string, currentTags = undefined, aftr = false, wallet: ExtensionOrJWK, env: "PROD" | "TEST") : Promise<SDKResult> {
-    let tags = addTags(currentTags, aftr);
+    //@ts-expect-error
+    if (window.arweaveWallet) {
+        //@ts-expect-error
+        await window.arweaveWallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'ACCESS_PUBLIC_KEY', 'SIGNATURE']);
+    }
+    //@ts-expect-error
+    const userSigner = new InjectedArweaveSigner(window.arweaveWallet);
+    await userSigner.setPublicKey();
 
+    let tags = addTags(currentTags, aftr);
     const warp = warpInit(env);
     try {
         //@ts-expect-error
         let txIds = await warp.deployFromSourceTx({
-            wallet: wallet,
+            wallet: userSigner,
             initState: initState,
             srcTxId: srcId,
             tags
