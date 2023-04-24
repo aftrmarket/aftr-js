@@ -1,10 +1,11 @@
 # Foreign Call Protocol v2
 
 **Status:** Draft
+
 **Authors:** Joe Berenbaum (joe@arceum.co)
 
 ## Abstract
-This document describes the second iteration of the Foreign Call Protocol (FCP).  The FCP is required for projects that want to leverage features such as [Verto Flex](https://github.com/useverto/flex) and multi-sig technologies like [AFTR Market](https://aftr.market).
+This document describes the second iteration of the [Foreign Call Protocol (FCP)](https://www.notion.so/verto/Foreign-Call-Protocol-Specification-61e221e5118a40b980fcaade35a2a718).  The FCP is required for projects that want to leverage features such as [Verto Flex](https://github.com/useverto/flex) and multi-sig technologies like [AFTR Market](https://aftr.market).
 
 ## Motivation
 
@@ -32,7 +33,7 @@ The process will work like this:
 4. Contract A can now do what it needs to to update it's own state now that the transfer has been claimed. 
 
 ### Requirements
-In order for protocols to communicate remotely, they need to ensure 2 additional properties are in their state and 2 additional functions are available in their contract.
+In order for protocols to communicate remotely, they need to ensure 2 additional properties are in their state and 2 additional functions are available in their contract. This specification assumes the [Warp](https://warp.cc/) execution environment to enable the [internalWrites](https://academy.warp.cc/docs/sdk/advanced/internal-calls#internal-writes) feature defined in the above exhibits.
 
 #### State Modifications
 The following parameters need to be added to a contracts state.  Note that if your state does not have these properties, the allow and claims functions will add them.
