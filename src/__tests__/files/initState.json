@@ -1,0 +1,44 @@
+{
+    "name": "Test Repo",
+    "ticker": "TEST",
+    "balances": {},
+    "claimable": [],
+    "claims": [],
+    "tokens": [],
+    "vault": {},
+    "votes": [],
+    "status": "started",
+    "ownership": "single",
+    "owner": "",
+    "votingSystem": "weighted",
+    "settings": [
+        [
+            "quorum",
+            0.5
+        ],
+        [
+            "support",
+            0.5
+        ],
+        [
+            "voteLength",
+            2000
+        ],
+        [
+            "lockMinLength",
+            100
+        ],
+        [
+            "lockMaxLength",
+            10000
+        ],
+        [
+            "communityLogo",
+            "nZr8RcHYY2XXloKcxtgrbssBdpvz6C2ifM92QvkYkgg"
+        ],
+        [
+            "evolve",
+            null
+        ]
+    ]
+}
