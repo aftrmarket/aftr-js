@@ -66,7 +66,7 @@ describe('AFTR-JS Tests', () => {
 
     it('should add a new member to the vehicle and mint them 9000 tokens', async () => {
         // Create a wallet for a second member
-        let newMember = { jwk: {}, address: '' }
+        let newMember = await createWallet()
         try {
             const jwk = await arweave.wallets.generate();
             const address = await arweave.wallets.getAddress(jwk)
@@ -95,6 +95,29 @@ describe('AFTR-JS Tests', () => {
         expect(balance).toBe(mintAmt)
     });
 
+    describe('changeState tests', () => {
+        let newMember = createWallet()
+        let anotherMember = createWallet()
+
+        test('add a new member', async () => {
+            // import your change state function
+            // use the change state function to add a member
+            // use the expect() function to check if that member is now in the balances
+        })
+
+        test('change the balance of the new member', async () => {
+        })
+
+        test('change the name of the repo', async () => {
+        })
+
+        test('execute a multi-interaction', async () => {
+            // 1. add a new member, 
+            // 2. set ownership to 'multi', 
+            // 3. change settings.support to 35%
+        })
+    })
+
     afterAll(async () => {
         await arlocal.stop();
         console.log('ArLocal stopped.')
@@ -115,5 +138,16 @@ function setInitState(owner: string): string {
     stateObj.owner = stateObj.owner === '' ? owner : stateObj.owner
     // If balances object is empty, add the repo owner to the balances object.
     stateObj.balances = Object.keys(stateObj.balances).length === 0 ? { [stateObj.owner]: 1 } : stateObj.balances
+    console.log(stateObj)
     return JSON.stringify(stateObj);
+}
+
+async function createWallet() {
+    try {
+        const jwk = await arweave.wallets.generate();
+        const address = await arweave.wallets.getAddress(jwk)
+        return { jwk, address }
+    } catch (error) {
+        console.log('Unable to generate new wallet\n' + error)
+    }
 }
