@@ -9,7 +9,7 @@ const arweave = Arweave.init({
 });
 
 export async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, tags?: any, env: "PROD" | "TEST" = "PROD") : Promise<SDKResult> {
-    const AFTR_CONTRACT_SOURCE_ID = (env === "PROD") ? "00elNGZCnqSfVIBUUOBeFB8VGg0nX8vCiDyZed0Zdys" : "46NSN651ClSYi241BtcarUY15wBL7OJgJsDEALE9Dzo";
+    const AFTR_CONTRACT_SOURCE_ID = (env === "PROD") ? "00elNGZCnqSfVIBUUOBeFB8VGg0nX8vCiDyZed0Zdys" : "LtdnLZJ1wfVXqGZKTgZPB3zzo3oUQxifpQeYIDDEFhU";
     const walletAddress = await arweave.wallets.jwkToAddress(wallet);
 
     if (!walletAddress || typeof walletAddress !== "string" || !isArweaveAddress(walletAddress)) {

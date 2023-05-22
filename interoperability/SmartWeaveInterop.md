@@ -19,17 +19,17 @@ FCP was a step forward for the Arweave ecosystem, but with the release of Warpâ€
 To understand what is required and how this works, let's take a look at an example. In our example, Contract A is going to call the transfer function on Contract B.  Because Contract A doesn't have a balance on Contract B, that interaction will be rejected unless contract interoperability is support by both contracts. So, for purposes of our example, we'll assume that both contracts support this specification.
 
 The process will work like this:
-![Step 1](contract-interop1.png "An **Allow** interaction is sent by a authorized caller (i.e. a wallet that is in Contract B's balances object) to Contract B telling the contract to expect a remote call from Contract A. This *claim* is stored in Contract B's **claimables[ ]**.")
+![Step 1](https://arweave.net/ZgGJEJE_v1bYx9Vd_WS2zqyN5ECrmCGxu4zNh3qp06M "An **Allow** interaction is sent by a authorized caller (i.e. a wallet that is in Contract B's balances object) to Contract B telling the contract to expect a remote call from Contract A. This *claim* is stored in Contract B's **claimables[ ]**.")
 
 1. An **Allow** interaction is sent by a authorized caller (i.e. a wallet that is in Contract B's balances object) to Contract B telling the contract to expect a remote call from Contract A. This *claim* is stored in Contract B's **claimables[ ]**.
 
-![Step 2](contract-interop2.png "An interaction on Contract A runs which includes the remote call to Contract B. In this interaction, Contract A remotely calls Contract B's **claim** function to *claim* its approved transfer.")
+![Step 2](https://arweave.net/LcZZh03No8QJKGBN6pDiaTZuAVZhsa2eJuLx-ENRfqo "An interaction on Contract A runs which includes the remote call to Contract B. In this interaction, Contract A remotely calls Contract B's **claim** function to *claim* its approved transfer.")
 2. An interaction on Contract A runs which includes the remote call to Contract B. In this interaction, Contract A remotely calls Contract B's **claim** function to *claim* its approved transfer.
 
-![Step 3](contract-interop3.png "As Contract B runs its **claim** function, it updates the balance to reflect the transfer, removes the corresponding object from its **claimables[ ]**, and adds the transaction ID to its **claims[ ]** for a log of the history.")
+![Step 3](https://arweave.net/0ryXoCm0LB8NeoXyVR1IEVwhFXLXPVEzWTgkDCVMAF4 "As Contract B runs its **claim** function, it updates the balance to reflect the transfer, removes the corresponding object from its **claimables[ ]**, and adds the transaction ID to its **claims[ ]** for a log of the history.")
 3. As Contract B runs its **claim** function, it updates the balance to reflect the transfer, removes the corresponding object from its **claimables[ ]**, and adds the transaction ID to its **claims[ ]** for a log of the history.
 
-![Step 4](contract-interop4.png "Contract A can now do what it needs to to update it's own state now that the transfer has been claimed.")
+![Step 4](https://arweave.net/tsSsyxQkRr94zFJsCQ7EFcWiuXwHAsVOHOheA2kVIrU "Contract A can now do what it needs to to update it's own state now that the transfer has been claimed.")
 4. Contract A can now do what it needs to to update it's own state now that the transfer has been claimed. 
 
 ### Requirements
