@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
         "target": "es2020",
-        "lib": ["es2020"],
+        "lib": [
+            "es2020"
+        ],
         "outDir": "dist",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
@@ -9,8 +11,14 @@
         "skipLibCheck": true,
         "moduleResolution": "node",
         "noEmit": true,
-        "noUncheckedIndexedAccess": true
+        "noUncheckedIndexedAccess": true,
+        "resolveJsonModule": true,
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist"]
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }

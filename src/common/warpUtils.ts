@@ -19,7 +19,7 @@ function warpInit(env: "PROD" | "TEST") {
     return warp;
 };
 
-async function warpRead(contractId: string, internalWrites = true, env: "PROD" | "TEST") : Promise<SDKResult> {
+async function warpRead(contractId: string, internalWrites = true, env: "PROD" | "TEST"): Promise<SDKResult> {
     const warp = warpInit(env);
 
     try {
@@ -31,11 +31,11 @@ async function warpRead(contractId: string, internalWrites = true, env: "PROD" |
         const result = await contract.readState();
         return { status: "success", data: result.cachedValue };
     } catch (e) {
-        return { status: "error", message: e};
+        return { status: "error", message: e };
     }
 };
 
-async function warpWrite(contractId: string, input: InputInterface, internalWrites = true, bundling = true, wallet: ExtensionOrJWK, env: "PROD" | "TEST") : Promise<SDKResult> {
+async function warpWrite(contractId: string, input: InputInterface, internalWrites = true, bundling = true, wallet: ExtensionOrJWK, env: "PROD" | "TEST"): Promise<SDKResult> {
     const warp = warpInit(env);
     try {
         //@ts-expect-error
@@ -48,17 +48,14 @@ async function warpWrite(contractId: string, input: InputInterface, internalWrit
         const { originalTxId } = await contract.writeInteraction(input);
         return { status: "success", data: originalTxId };
     } catch (e) {
-        return { status: "error", message: e};
+        return { status: "error", message: e };
     }
 };
 
-async function warpCreateFromTx(initState: string, srcId: string, currentTags = undefined, aftr = false, wallet: ExtensionOrJWK, env: "PROD" | "TEST") : Promise<SDKResult> {
-    //@ts-expect-error
+async function warpCreateFromTx(initState: string, srcId: string, currentTags = undefined, aftr = false, wallet: ExtensionOrJWK, env: "PROD" | "TEST"): Promise<SDKResult> {
     if (window.arweaveWallet) {
-        //@ts-expect-error
         await window.arweaveWallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'ACCESS_PUBLIC_KEY', 'SIGNATURE']);
     }
-    //@ts-expect-error
     const userSigner = new InjectedArweaveSigner(window.arweaveWallet);
     await userSigner.setPublicKey();
 
@@ -74,10 +71,11 @@ async function warpCreateFromTx(initState: string, srcId: string, currentTags = 
         });
         return { status: "success", data: txIds };
     } catch (e) {
-        return { status: "error", message: "ERROR deploying AFTR contract: " + e};
+        return { status: "error", message: "ERROR deploying AFTR contract: " + e };
     }
 };
 
+//@ts-ignore
 function addTags(currentTags, aftr = false) {
     let tags = [];
     if (currentTags) {
