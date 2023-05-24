@@ -1,14 +1,10 @@
 import { DepositInterface, ExtensionOrJWK, SDKResult } from './../common/faces';
-import { warpRead, warpWrite } from '../common/warpUtils';
-import Arweave from 'arweave';
+import { warpRead, warpWrite, arweaveInit } from '../common/warpUtils';
 
-const arweave = Arweave.init({
-    host: "arweave.net",
-    port: 443,
-    protocol: "https"
-});
+export async function deposit(repoId: string, depTokenId: string, qty: number, wallet: ExtensionOrJWK, env: "PROD" | "TEST" | "DEV" = "PROD") {
+    const arweave = arweaveInit(env);
 
-export async function deposit(repoId: string, depTokenId: string, qty: number, wallet: ExtensionOrJWK, env: "PROD" | "TEST" = "PROD") {
+    //@ts-expect-error
     const walletAddress = await arweave.wallets.jwkToAddress(wallet);
 
     if (!isArweaveAddress(repoId)) {
@@ -64,7 +60,7 @@ function isArweaveAddress(addr) {
     return true;
 }
 
-async function isDepositAllowed(repoId: string, tokenId: string, caller: string, qty: number, env: "PROD" | "TEST") : Promise<SDKResult> {
+async function isDepositAllowed(repoId: string, tokenId: string, caller: string, qty: number, env: "PROD" | "TEST" | "DEV") : Promise<SDKResult> {
     // Make sure user isn't trying to deposit asset of itself
     if (repoId === tokenId) {
         return { status: "error", message: "You can't deposit an asset to itself." };

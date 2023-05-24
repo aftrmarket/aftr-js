@@ -2,16 +2,18 @@ import { ExtensionOrJWK, SDKResult, InputInterface } from './faces';
 //@ts-ignore
 import { WarpFactory } from "warp-contracts/web";
 import { DeployPlugin, InjectedArweaveSigner } from 'warp-contracts-plugin-deploy';
+import Arweave from 'arweave';
 
-function warpInit(env: "PROD" | "TEST") {
+function warpInit(env: "PROD" | "TEST" | "DEV") {
     let warp = {};
 
     try {
-        // Using Warp
         if (env === "PROD") {
             warp = WarpFactory.forMainnet().use(new DeployPlugin());
-        } else {
+        } else if (env === "TEST") {
             warp = WarpFactory.forTestnet().use(new DeployPlugin());
+        } else {
+            warp = WarpFactory.forLocal().use(new DeployPlugin());
         }
     } catch (e) {
         console.log(e);
@@ -19,7 +21,7 @@ function warpInit(env: "PROD" | "TEST") {
     return warp;
 };
 
-async function warpRead(contractId: string, internalWrites = true, env: "PROD" | "TEST") : Promise<SDKResult> {
+async function warpRead(contractId: string, internalWrites = true, env: "PROD" | "TEST" | "DEV") : Promise<SDKResult> {
     const warp = warpInit(env);
 
     try {
@@ -35,7 +37,7 @@ async function warpRead(contractId: string, internalWrites = true, env: "PROD" |
     }
 };
 
-async function warpWrite(contractId: string, input: InputInterface, internalWrites = true, bundling = true, wallet: ExtensionOrJWK, env: "PROD" | "TEST") : Promise<SDKResult> {
+async function warpWrite(contractId: string, input: InputInterface, internalWrites = true, bundling = true, wallet: ExtensionOrJWK, env: "PROD" | "TEST" | "DEV") : Promise<SDKResult> {
     const warp = warpInit(env);
     try {
         //@ts-expect-error
@@ -52,7 +54,7 @@ async function warpWrite(contractId: string, input: InputInterface, internalWrit
     }
 };
 
-async function warpCreateFromTx(initState: string, srcId: string, currentTags = undefined, aftr = false, wallet: ExtensionOrJWK, env: "PROD" | "TEST") : Promise<SDKResult> {
+async function warpCreateFromTx(initState: string, srcId: string, currentTags = undefined, aftr = false, wallet: ExtensionOrJWK, env: "PROD" | "TEST" | "DEV") : Promise<SDKResult> {
     //@ts-expect-error
     if (window.arweaveWallet) {
         //@ts-expect-error
@@ -90,5 +92,24 @@ function addTags(currentTags, aftr = false) {
     return tags;
 };
 
+function arweaveInit (env: "PROD" | "TEST" | "DEV") {
+    let arweave = {};
 
-export { warpInit, warpRead, warpWrite, warpCreateFromTx };
+    if (env === "DEV") {
+        arweave = Arweave.init({
+            host: "localhost",
+            port: 1984,
+            protocol: "http"
+        });
+    } else {
+        arweave = Arweave.init({
+            host: "arweave.net",
+            port: 443,
+            protocol: "https"
+        });
+    }
+
+    return arweave;
+};
+
+export { warpInit, warpRead, warpWrite, warpCreateFromTx, arweaveInit };

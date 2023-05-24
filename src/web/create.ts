@@ -1,15 +1,23 @@
 import { RepoInterface, ExtensionOrJWK, SDKResult } from './../common/faces';
-import { warpCreateFromTx } from '../common/warpUtils';
-import Arweave from 'arweave';
+import { warpCreateFromTx, arweaveInit } from '../common/warpUtils';
 
-const arweave = Arweave.init({
-    host: "arweave.net",
-    port: 443,
-    protocol: "https"
-});
+export async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, tags?: any, env: "PROD" | "TEST" | "DEV" = "PROD", aftrSourceId?: string) : Promise<SDKResult> {
+    let AFTR_CONTRACT_SOURCE_ID = "";
+    if (env === "DEV") {
+        if (!aftrSourceId) {
+            return { status: "error", message: "Missing AFTR Contract Source ID." };
+        }
+        AFTR_CONTRACT_SOURCE_ID = aftrSourceId;
+    } else if (env === "TEST") {
+        AFTR_CONTRACT_SOURCE_ID = "s2xVKKJQs4kgRQbnyXMuBPO_nAD2SOO3ZXUcf6nLUIE";
+    } else {
+        // PROD
+        AFTR_CONTRACT_SOURCE_ID = "00elNGZCnqSfVIBUUOBeFB8VGg0nX8vCiDyZed0Zdys";
+    }
 
-export async function createRepo(repo: RepoInterface, wallet: ExtensionOrJWK, tags?: any, env: "PROD" | "TEST" = "PROD") : Promise<SDKResult> {
-    const AFTR_CONTRACT_SOURCE_ID = (env === "PROD") ? "00elNGZCnqSfVIBUUOBeFB8VGg0nX8vCiDyZed0Zdys" : "LtdnLZJ1wfVXqGZKTgZPB3zzo3oUQxifpQeYIDDEFhU";
+    const arweave = arweaveInit(env);
+
+    // @ts-expect-error
     const walletAddress = await arweave.wallets.jwkToAddress(wallet);
 
     if (!walletAddress || typeof walletAddress !== "string" || !isArweaveAddress(walletAddress)) {
