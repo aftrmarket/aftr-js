@@ -6,7 +6,9 @@ import { warpRead, warpWrite, warpCreateContract, arweaveInit, PORT } from './ut
 
 import fs from 'fs';
 import path from 'path';
-
+import { changeState } from '../web/changeState';
+import { castVote } from '../web/castVote';
+import exp from 'constants';
 let arweave = <Arweave>arweaveInit();
 interface TxIds {
     contractTxId: string,
@@ -15,9 +17,9 @@ interface TxIds {
 
 // Set to true to use the `contractSourcePath` as the contract source
 // Set to false to use the AFTR contract source, via warp
-const USE_LOCAL_CONTRACT_SOURCE = false
+const USE_LOCAL_CONTRACT_SOURCE = true
 const contractSourcePath = './files/contract.js'
-const aftrContractSourceId = 'LtdnLZJ1wfVXqGZKTgZPB3zzo3oUQxifpQeYIDDEFhU'
+const aftrContractSourceId = '46NSN651ClSYi241BtcarUY15wBL7OJgJsDEALE9Dzo'
 
 describe('AFTR-JS Tests', () => {
     let arlocal: ArLocal
@@ -96,25 +98,101 @@ describe('AFTR-JS Tests', () => {
     });
 
     describe('changeState tests', () => {
-        let newMember = createWallet()
-        let anotherMember = createWallet()
+        // let newMember = createWallet()
+        // let anotherMember = createWallet()
 
-        test('add a new member', async () => {
-            // import your change state function
-            // use the change state function to add a member
-            // use the expect() function to check if that member is now in the balances
+        test('change ticker', async () => {
+            let changes = [{key: "ticker", value: "AFT", note: "testing"}]
+            const result = await changeState(REPO_ID, changes, jwk, "TEST");
+            console.log(result);
+
+            const state = (await warpRead(REPO_ID)).state;
+            const ticker = state.ticker;
+
+            expect(ticker).toBe("AFT")
         })
 
-        test('change the balance of the new member', async () => {
+        test('change support', async () => {
+            let changes = [{key: "settings.support", value: "0.6", note: "testing"}]
+            const result = await changeState(REPO_ID, changes, jwk, "TEST");
+            
+
+            const state = (await warpRead(REPO_ID)).state;
+            const settings = state.settings;
+            const supportValue = settings.find(([key]) => key === "support")[1];
+            expect(supportValue).toBe("0.6");
         })
+        // TODO ask if this method should be used to modify balances at all?
+        // test('add new member', async () => {
+        //     const balances = (await warpRead(REPO_ID)).state.balances;
+        //     balances[newMember] = 7;
+        //     console.log(balances);
+        //     let changes = [{key: "balances", value: balances, note: "testing"}]
+        //     const result = await changeState(REPO_ID, changes, jwk, "TEST");
+            
+
+        //     const state = (await warpRead(REPO_ID)).state;
+        //     console.log(state);
+        // })
+
+        // test('change the balance of the new member', async () => {
+
+        // })
 
         test('change the name of the repo', async () => {
+            let changes = [{key: "name", value: "Test Repo Tested", note: "name change"}]
+            const result = await changeState(REPO_ID, changes, jwk, "TEST");
+            
+
+            const state = (await warpRead(REPO_ID)).state;
+            const name = state.name;
+            expect(name).toBe("Test Repo Tested");
         })
 
         test('execute a multi-interaction', async () => {
-            // 1. add a new member, 
-            // 2. set ownership to 'multi', 
-            // 3. change settings.support to 35%
+            // 1. change name  
+            // 2. change settings.support to 35%      
+            // 3. set ownership to 'multi', 
+            
+            let changes = [
+            {key: "name", value: "AFTR JS TEST REPO", note: "name change"},
+            {key: "settings.support", value: 0.35, note: "support lowered to 35%"},
+            {key: "ownership", value: "multi", note: "ownership is multi now"}
+            ];
+            const result = await changeState(REPO_ID, changes, jwk, "TEST");
+            
+
+            const state = (await warpRead(REPO_ID)).state;
+            const name = state.name;
+            expect(name).toBe("AFTR JS TEST REPO");
+            
+            const settings = state.settings;
+            const supportValue = settings.find(([key]) => key === "support")[1];
+            expect(supportValue).toBe(0.35);
+
+            const ownership = state.ownership;
+            expect(ownership).toBe("multi");
+        })
+    })
+    describe('castVote tests', () => {
+        test('cast vote', async () => {
+            // propose a vote
+            // repo is multi owned at this point
+            let changes = [{key: "name", value: "AFTR JS TEST REPO", note: "name change"}];
+            const result = await changeState(REPO_ID, changes, jwk, "TEST");
+
+            let state = (await warpRead(REPO_ID)).state;
+            // console.log(state.votes[state.votes.length - 1]);
+            const voteId = state.votes[state.votes.length - 1].id;
+            await castVote(REPO_ID, voteId, "yay", jwk, "TEST");
+            state = (await warpRead(REPO_ID)).state;
+            console.log(state.votes[state.votes.length - 1]);
+        })
+    })
+
+    describe('evolve test', () => {
+        test('evolve repo',async () => {
+            // 
         })
     })
 

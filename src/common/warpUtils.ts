@@ -1,6 +1,6 @@
 import { ExtensionOrJWK, SDKResult, InputInterface } from './faces';
 //@ts-ignore
-import { WarpFactory } from "warp-contracts/web";
+import { WarpFactory } from "warp-contracts";
 import { DeployPlugin, InjectedArweaveSigner } from 'warp-contracts-plugin-deploy';
 
 function warpInit(env: "PROD" | "TEST") {

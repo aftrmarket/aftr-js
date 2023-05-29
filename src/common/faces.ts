@@ -49,7 +49,11 @@ export interface InputInterface {
     key?: string,
     value?: string,
     note?: string,
-    actions?: InputInterface[]
+    actions?: InputInterface[],
+    // rahul's additons
+    txId?: string,
+    voteId?: number,
+    cast?: "yay" | "nay"
 }
 
 export interface DepositInterface {
